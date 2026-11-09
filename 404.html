@@ -1,41 +1,56 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        let id = params.get("id");
-        let num = params.get("num");
-        let ref = params.get("ref");
-        let type = params.get("type");
-
-        // إذا كان الـ ID ممرراً كمسار (Path) وليس كـ Query Parameter
-        if (!id) {
-            const pathSegments = window.location.pathname.split("/");
-            const lastSegment = pathSegments[pathSegments.length - 1];
-            if (lastSegment && lastSegment !== "index.html" && lastSegment !== "view") {
-                id = lastSegment;
-            }
-        }
-
-        if (id) {
-            // التوجيه السليم إلى السيرفر الجديد مع تمرير كافة البيانات
-            let target = "https://ajeer-qiwa-s.shop/ajeer/verify.html?id=" + encodeURIComponent(id);
-            if (num) target += "&num=" + encodeURIComponent(num);
-            if (ref) target += "&ref=" + encodeURIComponent(ref);
-            if (type) target += "&type=" + encodeURIComponent(type);
-
-            window.location.replace(target);
-        } else {
-            document.body.innerHTML = `
-                <h2>Invalid request</h2>
-                <p>Missing ID.</p>
-            `;
-        }
-    </script>
+    <title>التحقق من التصريح</title>
 </head>
 <body>
+<script>
+(function () {
+    const params = new URLSearchParams(location.search);
+
+    let id = params.get("id");
+    const num = params.get("num");
+    const ref = params.get("ref");
+    const type = params.get("type");
+
+    // استخراج رقم العقد من مسار QR القديم
+    if (!id) {
+        const parts = location.pathname
+            .split("/")
+            .filter(Boolean);
+
+        const last = parts[parts.length - 1];
+
+        if (last &&
+            last !== "404.html" &&
+            last !== "index.html" &&
+            last !== "view") {
+            id = decodeURIComponent(last);
+        }
+    }
+
+    if (!id && !num) {
+        document.body.innerHTML =
+            "<h2>طلب غير صالح</h2><p>رقم العقد غير موجود.</p>";
+        return;
+    }
+
+    const target = new URL(
+        "/view/ajeer/verify.html",
+        location.origin
+    );
+
+    if (id) target.searchParams.set("id", id);
+    if (num) target.searchParams.set("num", num);
+    if (ref) target.searchParams.set("ref", ref);
+    if (type) target.searchParams.set("type", type);
+
+    location.replace(target.toString());
+})();
+</script>
 </body>
 </html>
+
