@@ -1,0 +1,33 @@
+/* Additional permit verification layout, restored as a standalone GitHub Pages asset. */
+:root{--ajeer-ink:#1f2548;--ajeer-border:#d9dce5;--ajeer-muted:#6b7280}
+*{box-sizing:border-box}
+body{margin:0;background:#f7f8fb;color:var(--ajeer-ink);font-family:"Cairo","Tahoma",Arial,sans-serif}
+.qiwa-ajeer-app{min-height:100vh;display:flex;flex-direction:column}
+.mainHeader{background:#fff;border-bottom:1px solid #e5e7eb}
+.mainHeader__top .container-fluid{max-width:1180px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.mainHeader__logoContainer img{max-height:54px;max-width:180px;object-fit:contain}
+.appBody{width:100%;flex:1;padding:28px 16px 42px}
+.content{max-width:1120px;margin:auto}
+.verification-page{width:100%}
+#loading,#errorBox{max-width:1000px;margin:28px auto;padding:24px;text-align:center;background:#fff;border:1px solid var(--ajeer-border);border-radius:8px}
+#errorBox{color:#a32020}
+.verification-document{max-width:1050px;margin:0 auto;background:#fff;border:1px solid var(--ajeer-border);padding:28px 34px;box-shadow:0 2px 12px #18264a0d}
+.verification-header{width:100%;border-collapse:collapse;margin-bottom:18px}
+.verification-header td{padding:10px;vertical-align:middle}
+.verification-header__logos{width:30%;white-space:nowrap}
+.verification-logo{max-width:112px;max-height:54px;object-fit:contain;margin-inline-end:14px}
+.verification-header__title{text-align:center}
+.verification-title{font-size:24px;font-weight:800;margin:0;color:var(--ajeer-ink)}
+.verification-header__result{text-align:left;width:20%}
+.verification-result{display:inline-block;padding:8px 17px;border-radius:4px;background:#16a34a;color:white;font-size:14px}
+.verification-result--expired{background:#b91c1c}
+.verification-result--valid{background:#16a34a}
+.verification-copy{text-align:center;margin:10px 0 22px;color:#475569;font-size:15px}
+.verification-table{width:100%;border-collapse:collapse;margin:0 0 20px;table-layout:fixed}
+.verification-table th,.verification-table td{border:1px solid var(--ajeer-border);padding:13px 12px;text-align:right;font-size:14px;overflow-wrap:anywhere}
+.verification-table__section th{background:#f0f2f7;color:var(--ajeer-ink);font-weight:800;font-size:15px}
+.verification-table__label{width:20%;background:#fafbfc;color:#374151;font-weight:700}
+.verification-table__value{width:30%;color:#111827;font-weight:600}
+.mainFooter{background:#fff;border-top:1px solid #e5e7eb;padding:20px 28px;text-align:center;color:#6b7280;font-size:13px}
+[hidden]{display:none!important}
+@media(max-width:700px){.appBody{padding:14px 8px 24px}.verification-document{padding:14px 9px}.verification-header__logos{width:24%}.verification-logo{max-width:64px;max-height:38px;margin-inline-end:4px}.verification-title{font-size:17px}.verification-header__result{width:22%}.verification-result{padding:6px 8px;font-size:11px}.verification-table th,.verification-table td{padding:8px 6px;font-size:11px}.verification-table__label{width:23%}.verification-table__value{width:27%}}
