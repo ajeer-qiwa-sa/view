@@ -1,31 +1,339 @@
-<!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>أجير | التحقق من التصريح الإضافي</title>
-<link rel="stylesheet" href="https://ajeer.qiwa.sa/dist/css/plugins.css?id=2f16e78122e8224d42665167e789885d">
-<link rel="stylesheet" href="https://ajeer.qiwa.sa/dist/css/app.css?id=cfcfd41d51d91c15f5c21fdaed7ee6fb">
-<link rel="stylesheet" href="../shared/css/add-verify.css?v=1">
-</head><body><div class="qiwa-ajeer-app">
-<header class="mainHeader"><div class="mainHeader__top"><div class="container-fluid">
-<div class="mainHeader__logoContainer"><a href="https://ajeer.qiwa.sa/landing/"><img src="https://ajeer.qiwa.sa/dist/img/ajeer-logo.png" alt="أجير"></a></div>
-<div class="mainHeader__logoContainer mainHeader__logoContainer--right"><a href="https://www.hrsd.gov.sa/"><img src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="وزارة الموارد البشرية والتنمية الاجتماعية"></a></div>
-</div></div></header>
-<div class="appBody"><div class="content" id="content"><main class="verification-page">
-<div id="loading" role="status">جاري التحقق من بيانات التصريح...</div><div id="errorBox" role="alert" hidden>تعذر التحقق من بيانات التصريح</div>
-<div class="verification-document" id="verificationContent" hidden>
-<table class="verification-header" dir="rtl"><tbody><tr>
-<td class="verification-header__logos"><img class="verification-logo verification-logo--ajeer" src="https://ajeer.qiwa.sa/dist/img/ajeer-logo.png" alt="أجير"><img class="verification-logo verification-logo--hrsd" src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="وزارة الموارد البشرية والتنمية الاجتماعية"></td>
-<td class="verification-header__title"><h1 class="verification-title">التحقق من تصريح أجير</h1></td>
-<td class="verification-header__result"><strong class="verification-result" id="statusBadge"></strong></td>
-</tr></tbody></table><div class="verification-copy"><p id="statusMessage"></p></div>
-<table class="verification-table" dir="rtl"><tbody><tr class="verification-table__section"><th colspan="4">بيانات التصريح</th></tr>
-<tr><th class="verification-table__label">رقم التصريح</th><td class="verification-table__value" id="permitNumber">-</td><th class="verification-table__label">نوع التصريح</th><td class="verification-table__value" id="permitType">تصريح إعارة أجير</td></tr>
-<tr><th class="verification-table__label">تاريخ بداية التصريح</th><td class="verification-table__value" id="issueDate">-</td><th class="verification-table__label">تاريخ نهاية التصريح</th><td class="verification-table__value" id="expiryDate">-</td></tr></tbody></table>
-<table class="verification-table" dir="rtl"><tbody><tr class="verification-table__section"><th colspan="4">بيانات العامل</th></tr>
-<tr><th class="verification-table__label">اسم العامل</th><td class="verification-table__value" id="workerName">-</td><th class="verification-table__label">رقم الهوية / الإقامة</th><td class="verification-table__value" id="workerIdNumber">-</td></tr>
-<tr><th class="verification-table__label">الجنسية</th><td class="verification-table__value" id="nationality">-</td><th class="verification-table__label">المهنة</th><td class="verification-table__value" id="occupation">-</td></tr>
-<tr><th class="verification-table__label">الجنس</th><td class="verification-table__value" id="gender">ذكر</td><th class="verification-table__label">تاريخ الميلاد</th><td class="verification-table__value" id="birthDate">-</td></tr></tbody></table>
-<table class="verification-table" dir="rtl"><tbody><tr class="verification-table__section"><th colspan="4">بيانات المنشأة</th></tr>
-<tr><th class="verification-table__label">رقم المنشأة</th><td class="verification-table__value" id="providerHrId">-</td><th class="verification-table__label">اسم المنشأة</th><td class="verification-table__value" id="providerEntity">-</td></tr></tbody></table>
-</div></main></div></div>
-<footer class="mainFooter"><div class="mainFooter__bottomNav"><span>أجير لحلول الموارد البشرية © 2026</span></div></footer>
-</div><script src="../shared/js/add-verify.js?v=1"></script></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أجير | التحقق من تصريح أجير</title>
+  <link rel="stylesheet" href="https://ajeer.qiwa.sa/dist/css/plugins.css?id=2f16e78122e8224d42665167e789885d">
+  <link rel="stylesheet" href="https://ajeer.qiwa.sa/dist/css/app.css?id=cfcfd41d51d91c15f5c21fdaed7ee6fb">
+  <link rel="stylesheet" href="../shared/css/add-verify.css?v=2">
+</head>
+<body>
+  <div class="qiwa-ajeer-app">
+
+  <!-- ===== Top header bar ===== -->
+  <header class="mainHeader">
+    <div class="mainHeader__top">
+      <div class="container-fluid">
+        <div class="mainHeader__logoContainer">
+          <a href="https://ajeer.qiwa.sa/landing/"><img src="https://ajeer.qiwa.sa/dist/img/ajeer-logo.png" alt="Qiwa Ajeer"></a>
+        </div>
+        <div class="mainHeader__logoContainer mainHeader__logoContainer--right">
+          <a href="https://mlsd.gov.sa/"><img src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="MLSD"></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Verification document ===== -->
+  <div class="appBody">
+  <div class="content" id="content">
+  <main class="verification-page">
+    <div id="loading" role="status">جاري التحقق من بيانات التصريح...</div>
+
+    <div id="errorBox" role="alert" hidden>تعذر التحقق من بيانات التصريح</div>
+
+    <div class="verification-document" id="verificationContent" hidden>
+
+      <table class="verification-header" dir="rtl">
+        <tbody>
+          <tr>
+            <td class="verification-header__logos">
+              <img class="verification-logo verification-logo--ajeer" src="https://ajeer.qiwa.sa/dist/img/ajeer-logo.png" alt="أجير">
+              <img class="verification-logo verification-logo--hrsd" src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="وزارة الموارد البشرية والتنمية الاجتماعية">
+            </td>
+            <td class="verification-header__title">
+              <h1 class="verification-title">التحقق من تصريح أجير</h1>
+            </td>
+            <td class="verification-header__result">
+              <strong class="verification-result" id="statusBadge"></strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="verification-copy">
+        <p id="statusMessage"></p>
+      </div>
+
+      <!-- بيانات التصريح -->
+      <table class="verification-table" dir="rtl">
+        <tbody>
+          <tr class="verification-table__section"><th colspan="4">بيانات التصريح</th></tr>
+          <tr>
+            <th class="verification-table__label">رقم التصريح</th>
+            <td class="verification-table__value" id="permitNumber">-</td>
+            <th class="verification-table__label">نوع التصريح</th>
+            <td class="verification-table__value" id="permitType">-</td>
+          </tr>
+          <tr>
+            <th class="verification-table__label">تاريخ بداية التصريح</th>
+            <td class="verification-table__value" id="issueDate">-</td>
+            <th class="verification-table__label">تاريخ نهاية التصريح</th>
+            <td class="verification-table__value" id="expiryDate">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- بيانات العامل -->
+      <table class="verification-table" dir="rtl">
+        <tbody>
+          <tr class="verification-table__section"><th colspan="4">بيانات العامل</th></tr>
+          <tr>
+            <th class="verification-table__label">اسم العامل</th>
+            <td class="verification-table__value" id="workerName">-</td>
+            <th class="verification-table__label">رقم الهوية / الإقامة</th>
+            <td class="verification-table__value" id="workerIdNumber">-</td>
+          </tr>
+          <tr>
+            <th class="verification-table__label">الجنسية</th>
+            <td class="verification-table__value" id="nationality">-</td>
+            <th class="verification-table__label">المهنة</th>
+            <td class="verification-table__value" id="occupation">-</td>
+          </tr>
+          <tr>
+            <th class="verification-table__label">الجنس</th>
+            <td class="verification-table__value" id="gender">-</td>
+            <th class="verification-table__label">تاريخ الميلاد</th>
+            <td class="verification-table__value" id="birthDate">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- بيانات المنشأة -->
+      <table class="verification-table" dir="rtl">
+        <tbody>
+          <tr class="verification-table__section"><th colspan="4">بيانات المنشأة</th></tr>
+          <tr>
+            <th class="verification-table__label">رقم المنشأة</th>
+            <td class="verification-table__value" id="providerHrId">-</td>
+            <th class="verification-table__label">اسم المنشأة</th>
+            <td class="verification-table__value" id="providerEntity">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </main>
+  </div>
+  </div>
+
+  <footer class="mainFooter ">
+    <div class="mainFooter__top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-6 px-5 px-lg-0" style="color: #1F2548;">
+                    <div class="row" style="padding-bottom: 10px;">
+                        <div class="col-md-3">
+                            <div class="mainFooter__topNavTitle mt-5 mt-sm-5 mt-md-0 mt-lg-0 mt-xl-0">
+                                أجير
+                            </div>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/about" class="mainFooter__topNavLink">
+                                    عن أجير
+                                </a>
+                            </p>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/about_notices" class="mainFooter__topNavLink">
+                                    خدمات أجير
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mainFooter__topNavTitle mt-5 mt-sm-5 mt-md-0 mt-lg-0 mt-xl-0">
+                                الدعم
+                            </div>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/support" class="mainFooter__topNavLink">
+                                    الدعم و المساعدة
+                                </a>
+                            </p>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/faq" class="mainFooter__topNavLink">
+                                    الأسئلة الشائعة
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mainFooter__topNavTitle mt-5 mt-sm-5 mt-md-0 mt-lg-0 mt-xl-0">
+                                الشروط و الخصوصية
+                            </div>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/terms" class="mainFooter__topNavLink">
+                                    الشروط والأحكام
+                                </a>
+                            </p>
+                            <p>
+                                <a href="https://ajeer.qiwa.sa/privacy_policy" class="mainFooter__topNavLink">
+                                    سياسة الخصوصية
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mainFooter__topNavTitle mt-5 mt-sm-5 mt-md-0 mt-lg-0 mt-xl-0">
+                                تواصل معنا
+                            </div>
+                            <p>
+                                <a href="https://twitter.com/AjeerSA" aria-label="X" target="_blank" rel="noopener noreferrer"
+                                   class="mainFooter__socialsLink d-inline-block px-2">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="1.45rem" height="1.45rem" style="vertical-align: middle;" fill="#1f2548"><path d="M14.8735 18.7581H17.5833L5.11544 1.30005L10.1894 8.40909L10.9802 9.51569L17.5833 18.7581H14.8735ZM17.5833 0L11.1185 7.35254L5.95604 0H0L7.80865 11.1188L0 20H1.76414L8.59118 12.2348L14.044 20H20L11.9024 8.46861L19.3474 0H17.5833Z"/></svg>
+                                </a>
+                                <a href="mailto:support@ajeer.com.sa" aria-label="تواصل معنا عبر البريد الإلكتروني support@ajeer.com.sa" target="_blank" rel="noopener noreferrer" class="mainFooter__socialsLink d-inline-block px-2">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" width="1.5rem" height="1.5rem" style="vertical-align: middle;" fill="#1f2548"><path transform="translate(0 960) scale(1 -1)" d="M1018.787 918.063c-4.558 3.998-11.045 4.926-16.543 2.376l-993.387-461.556c-5.348-2.486-8.792-7.822-8.856-13.718s3.266-11.305 8.562-13.904l281.127-137.966c5.155-2.532 11.302-1.959 15.906 1.482l273.333 204.292-214.578-220.719c-3.061-3.15-4.623-7.463-4.286-11.841l21.365-278.237c0.474-6.165 4.607-11.437 10.482-13.369 1.57-0.514 3.184-0.765 4.779-0.765 4.375 0 8.63 1.877 11.59 5.305l149.213 172.908 184.458-88.134c4.004-1.913 8.639-1.993 12.707-0.223 4.068 1.772 7.166 5.219 8.495 9.45l260.142 828.528c1.818 5.786 0.046 12.095-4.509 16.093z"/></svg>
+                                </a>
+                                <a href="tel:920011040" aria-label="تواصل معنا عبر الهاتف 920011040" class="mainFooter__socialsLink d-inline-block px-2">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" style="vertical-align: middle;" fill="#1f2548"><path transform="translate(0 960) scale(1 -1)" d="M1001.042 150.739l-158.141 158.158c-31.499 31.372-83.661 30.419-116.257-2.189l-79.672-79.654c-5.034 2.774-10.244 5.672-15.721 8.746-50.312 27.877-119.173 66.086-191.634 138.601-72.676 72.667-110.921 141.634-138.883 191.978-2.951 5.334-5.778 10.476-8.57 15.36l79.76 79.713c32.646 32.655 33.546 84.803 2.121 116.266l-158.141 158.176c-31.425 31.419-83.611 30.466-116.257-2.189l-44.569-44.825 1.218-1.209c-14.945-19.069-27.433-41.063-36.726-64.78-8.567-22.576-13.9-44.119-16.339-65.707-20.881-173.112 58.226-331.323 272.912-546.013 296.762-296.741 535.913-274.324 546.23-273.23 22.47 2.686 44.005 8.055 65.889 16.554 23.511 9.185 45.49 21.655 64.548 36.568l0.974-0.865 45.152 44.213c32.578 32.649 33.517 84.814 2.106 116.328z"/></svg>
+                                </a>
+                            </p>
+                        </div>
+                        <hr class="hr d-block d-md-none mt-5" />
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-12 col-lg-6">
+                    <div class="">
+                        <div class="d-none d-md-block">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="p-2">
+                                    <div class="mainFooter__topNavLogo px-3" >
+                                        <a href="https://mlsd.gov.sa/" target="_blank" rel="noopener noreferrer">
+                                            <img src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="MLSD" height="50"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="mainFooter__topNavLogo px-3">
+                                        <a href="https://takamolholding.com/" target="_blank" rel="noopener noreferrer">
+                                            <img src="https://ajeer.qiwa.sa/dist/img/takamol-logo.png" alt="Takamol" height="50"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-2" style="border-left: solid 1px #EBEBEB;">
+                                    <div class="mainFooter__topNavLogo px-3">
+                                        <a href="https://tamkeentech.sa/" target="_blank" rel="noopener noreferrer">
+                                            <img src="https://ajeer.qiwa.sa/dist/img/tamkeen-logo-1.svg" alt="Tamkeen" height="50"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="mainFooter__topNavLogo px-1">
+                                        <a href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/441" target="_blank" rel="noopener noreferrer">
+                                            <img src="https://ajeer.qiwa.sa/dist/img/digital-govt-auth-logo.svg" alt="Tamkeen" style="max-width: 300px;"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--For mobile-->
+                        <div class="d-block d-md-none">
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                                <div class="w-50" style="border-left: solid 2px #EBEBEB; width: 50%;">
+                                    <div class="p-2">
+                                        <div class="mainFooter__topNavLogo px-3" >
+                                            <a href="https://mlsd.gov.sa/" target="_blank" rel="noopener noreferrer">
+                                                <img src="https://ajeer.qiwa.sa/dist/img/mlsd-logo.png" alt="MLSD" height="50"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="mainFooter__topNavLogo px-3">
+                                            <a href="https://takamolholding.com/" target="_blank" rel="noopener noreferrer">
+                                                <img src="https://ajeer.qiwa.sa/dist/img/takamol-logo.png" alt="Takamol" height="50"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="mainFooter__topNavLogo px-3">
+                                            <a href="https://tamkeentech.sa/" target="_blank" rel="noopener noreferrer">
+                                                <img src="https://ajeer.qiwa.sa/dist/img/tamkeen-logo-1.svg" alt="Tamkeen" height="50"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-50">
+                                    <div class="p-2">
+                                        <div class="mainFooter__topNavLogo px-1">
+                                            <a href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/441" target="_blank" rel="noopener noreferrer">
+                                                <img src="https://ajeer.qiwa.sa/dist/img/digital-govt-auth-logo.svg" alt="Tamkeen" style="max-width: 300px;"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Hiding old main footer instead of removing-->
+    <div class="mainFooter__bottom d-none">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <div class="mainFooter__appLogo">
+                        <a href="https://ajeer.qiwa.sa/">
+                            <img src="https://ajeer.qiwa.sa/dist/img/ajeer-logo.png" alt="Qiwa Ajeer"/>
+                        </a>
+                    </div>
+                    <div class="mainFooter__bottomNav">
+                        <ul class="mainFooter__bottomNavList">
+                            <li class="mainFooter__bottomNavItem">
+                                <a href="https://ajeer.qiwa.sa/terms" class="mainFooter__bottomNavItemLink">
+                                    الشروط والأحكام
+                                </a>
+                            </li>
+                            <li class="mainFooter__bottomNavItem">
+                                <a href="https://ajeer.qiwa.sa/privacy_policy" class="mainFooter__bottomNavItemLink">
+                                    سياسة الخصوصية
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-5">
+                    <div class="mainFooter__bottomNav">
+                        <ul class="mainFooter__bottomNavList">
+                            <li class="mainFooter__bottomNavItem">
+                                تطوير شركة تمكين للتقنيات - بدعم من وزارة الموارد البشرية والتنمية الإجتماعية
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="mainFooter__langs d-block">
+
+                    </div>
+                    <div class="mainFooter__socials">
+                        <ul class="mainFooter__socialsList">
+                            <li class="mainFooter__socialsListItem">
+                                <a href="mailto:support@ajeer.com.sa" aria-label="تواصل معنا عبر البريد الإلكتروني support@ajeer.com.sa" target="_blank" rel="noopener noreferrer" class="mainFooter__socialsLink">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" width="1.5rem" height="1.5rem" style="vertical-align: middle;" fill="#1f2548"><path transform="translate(0 960) scale(1 -1)" d="M1018.787 918.063c-4.558 3.998-11.045 4.926-16.543 2.376l-993.387-461.556c-5.348-2.486-8.792-7.822-8.856-13.718s3.266-11.305 8.562-13.904l281.127-137.966c5.155-2.532 11.302-1.959 15.906 1.482l273.333 204.292-214.578-220.719c-3.061-3.15-4.623-7.463-4.286-11.841l21.365-278.237c0.474-6.165 4.607-11.437 10.482-13.369 1.57-0.514 3.184-0.765 4.779-0.765 4.375 0 8.63 1.877 11.59 5.305l149.213 172.908 184.458-88.134c4.004-1.913 8.639-1.993 12.707-0.223 4.068 1.772 7.166 5.219 8.495 9.45l260.142 828.528c1.818 5.786 0.046 12.095-4.509 16.093z"/></svg>
+                                </a>
+                            </li>
+                            <li class="mainFooter__socialsListItem">
+                                <a href="tel:920011040" aria-label="تواصل معنا عبر الهاتف 920011040" class="mainFooter__socialsLink">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" style="vertical-align: middle;" fill="#1f2548"><path transform="translate(0 960) scale(1 -1)" d="M1001.042 150.739l-158.141 158.158c-31.499 31.372-83.661 30.419-116.257-2.189l-79.672-79.654c-5.034 2.774-10.244 5.672-15.721 8.746-50.312 27.877-119.173 66.086-191.634 138.601-72.676 72.667-110.921 141.634-138.883 191.978-2.951 5.334-5.778 10.476-8.57 15.36l79.76 79.713c32.646 32.655 33.546 84.803 2.121 116.266l-158.141 158.176c-31.425 31.419-83.611 30.466-116.257-2.189l-44.569-44.825 1.218-1.209c-14.945-19.069-27.433-41.063-36.726-64.78-8.567-22.576-13.9-44.119-16.339-65.707-20.881-173.112 58.226-331.323 272.912-546.013 296.762-296.741 535.913-274.324 546.23-273.23 22.47 2.686 44.005 8.055 65.889 16.554 23.511 9.185 45.49 21.655 64.548 36.568l0.974-0.865 45.152 44.213c32.578 32.649 33.517 84.814 2.106 116.328z"/></svg>
+                                </a>
+                            </li>
+                            <li class="mainFooter__socialsListItem">
+                                <a href="https://twitter.com/AjeerSA" aria-label="X" target="_blank" rel="noopener noreferrer"
+                                   class="mainFooter__socialsLink">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="1.45rem" height="1.45rem" style="vertical-align: middle;" fill="#1f2548"><path d="M14.8735 18.7581H17.5833L5.11544 1.30005L10.1894 8.40909L10.9802 9.51569L17.5833 18.7581H14.8735ZM17.5833 0L11.1185 7.35254L5.95604 0H0L7.80865 11.1188L0 20H1.76414L8.59118 12.2348L14.044 20H20L11.9024 8.46861L19.3474 0H17.5833Z"/></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+  </div>
+
+  <script src="../shared/js/add-verify.js?v=2"></script>
+</body>
+</html>
