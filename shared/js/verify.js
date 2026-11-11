@@ -1,3 +1,32 @@
+let captchaProcessing = false;
+function triggerCaptchaClick(e) {
+  if (e) e.stopPropagation();
+  if (captchaProcessing) return;
+  captchaProcessing = true;
+  const checkbox = document.getElementById("rcCheckbox");
+  const spinner = document.getElementById("rcSpinner");
+  const checkmark = document.getElementById("rcCheckmark");
+  if (checkbox) checkbox.style.display = "none";
+  if (spinner) spinner.style.display = "block";
+  setTimeout(() => {
+    if (spinner) spinner.style.display = "none";
+    if (checkmark) checkmark.style.display = "block";
+    setTimeout(() => {
+      const modal = document.getElementById("captchaModal");
+      if (!modal) return;
+      modal.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      modal.style.opacity = "0";
+      modal.style.transform = "scale(0.97)";
+      setTimeout(() => { modal.style.display = "none"; }, 400);
+    }, 400);
+  }, 5000);
+}
+window.triggerCaptchaClick = triggerCaptchaClick;
+function onCaptchaSuccess() {
+  const modal = document.getElementById("captchaModal");
+  if (modal) modal.style.display = "none";
+}
+window.onCaptchaSuccess = onCaptchaSuccess;
 // GitHub Pages-only contract verification via the Supabase public REST API.
 const SB_URL="https://pbyeagtiupzqyjdycbyv.supabase.co";
 const SB_KEY="sb_publishable_8cKY0gbo8OLRWyzPGUtE3A_KwudbDok";
