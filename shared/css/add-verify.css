@@ -1,61 +1,233 @@
-/* Modern isolated styling for the additional permit verification page only */
-.qiwa-ajeer-app{font-family:"Tahoma","Arial",sans-serif;color:#172b2b}
-.verification-page{background:linear-gradient(180deg,#f1f6f4 0%,#f7f9f8 280px,#f7f9f8 100%);min-height:70vh;padding:38px 16px 64px}
-.verification-document{position:relative;overflow:hidden;max-width:1040px;margin:0 auto;padding:0 0 30px;background:#fff;border:1px solid #e0e9e5;border-radius:18px;box-shadow:0 18px 48px rgba(23,57,47,.09);color:#172b2b;direction:rtl}
-.verification-header{width:100%;table-layout:fixed;border-collapse:collapse;background:linear-gradient(125deg,#123e35 0%,#17624e 58%,#23745c 100%);color:#fff}
-.verification-header td{height:138px;padding:20px 18px;text-align:center;vertical-align:middle;border:0}
-.verification-header__logos{width:30%;background:rgba(255,255,255,.97);border-radius:0 0 0 20px}
-.verification-header__title{width:48%}
-.verification-header__result{width:22%}
-.verification-title{margin:0;color:#fff;font-size:clamp(22px,3vw,31px);font-weight:800;line-height:1.5;letter-spacing:-.3px}
-.verification-logo{display:inline-block;max-height:68px;object-fit:contain;vertical-align:middle}
-.verification-logo--ajeer{width:78px;margin-left:16px}
-.verification-logo--hrsd{width:164px}
-.verification-result{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:108px;padding:11px 16px;border:1px solid rgba(255,255,255,.36);border-radius:14px;background:rgba(255,255,255,.13);color:#fff;font-size:17px;font-weight:800;line-height:1.5}
-.verification-result--valid{background:#e4f6ed;border-color:#c6ead6;color:#176545}
-.verification-result--expired,.verification-result--canceled,.verification-result--invalid,.verification-result--system,.verification-result--tampered{background:#fff0ed;border-color:#f4d2cb;color:#a33326}
-.verification-result span{display:block;margin-top:2px;font-size:12px;font-weight:600}
-.verification-copy{max-width:900px;margin:26px auto 24px;padding:0 22px;text-align:center;color:#536762;font-size:16px;line-height:1.9}
-.verification-copy p{margin:0}
-.verification-table{width:calc(100% - 52px);margin:0 auto 18px;border-collapse:separate;border-spacing:0;table-layout:fixed;overflow:hidden;border:1px solid #e1eae6;border-radius:13px;background:#fff}
-.verification-table th,.verification-table td{padding:15px 14px;border:0;border-bottom:1px solid #edf1ef;font-size:15px;line-height:1.65;vertical-align:middle;word-break:break-word}
-.verification-table tr:last-child th,.verification-table tr:last-child td{border-bottom:0}
-.verification-table__section th{padding:13px 18px;background:#eaf3ef;color:#174b3d;font-size:17px;font-weight:800;text-align:right;border-bottom:1px solid #dce9e2}
-.verification-table__label{width:24%;background:#f7faf8;color:#60736c;font-size:14px!important;font-weight:600;text-align:right}
-.verification-table__label span{display:block;margin-top:3px;color:#82928c;font-size:11px}
-.verification-table__value{width:26%;background:#fff;color:#1c302a;font-size:15px!important;font-weight:700;text-align:center}
-.verification-table tr:not(.verification-table__section):hover .verification-table__value{background:#fcfefd}
-.verification-actions{margin:22px 26px 0;text-align:center}
-.verification-actions button{padding:12px 25px;border:0;border-radius:10px;background:#17624e;color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 5px 14px rgba(23,98,78,.18)}
-.verification-actions button:hover{background:#124b3d}
-#loading,#errorBox{max-width:760px;margin:24px auto;padding:15px 18px;border-radius:12px;text-align:center}
-#errorBox{background:#fff1ef;color:#9d3025}
-[hidden]{display:none!important}
-@media(max-width:760px){
- .verification-page{padding:18px 9px 36px}
- .verification-document{border-radius:14px;padding-bottom:18px}
- .verification-header,.verification-header tbody,.verification-header tr{display:block;width:100%}
- .verification-header tr{display:flex;flex-direction:column}
- .verification-header td{display:block;box-sizing:border-box;width:100%;height:auto;padding:15px 12px}
- .verification-header__logos{order:0;border-radius:0;background:#fff;padding:12px!important}
- .verification-header__title{order:1;padding:19px 12px 10px!important}
- .verification-header__result{order:2;padding:7px 12px 19px!important}
- .verification-logo{max-height:48px}
- .verification-logo--ajeer{width:62px;margin-left:10px}
- .verification-logo--hrsd{width:135px}
- .verification-title{font-size:23px}
- .verification-result{min-width:0;padding:7px 16px;font-size:15px}
- .verification-copy{margin:18px auto;padding:0 14px;font-size:14px}
- .verification-table{display:table;width:calc(100% - 20px);margin-bottom:13px;border-radius:11px}
- .verification-table tbody{display:table-row-group}
- .verification-table tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);width:100%}
- .verification-table tr.verification-table__section{display:block}
- .verification-table tr.verification-table__section th{display:block;width:100%;box-sizing:border-box}
- .verification-table th,.verification-table td{display:block;box-sizing:border-box;width:100%;padding:10px 9px;font-size:13px!important}
- .verification-table__label{text-align:right}
- .verification-table__value{text-align:center}
+@font-face {
+    font-family: VerificationFrutigerArabic;
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/FrutigerLTArabic-45Light.woff2") format("woff2");
 }
-@media(max-width:380px){
- .verification-table tr{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
- .verification-table th,.verification-table td{padding:9px 7px;font-size:12px!important}
+
+.qiwa-ajeer-app {
+    font-family: VerificationFrutigerArabic, sans-serif;
 }
+
+.verification-page {
+    background: #f7f8f7;
+    min-height: 70vh;
+    padding: 28px 14px 54px;
+}
+
+.verification-document {
+    background: #fbfcfb;
+    border: 1px solid #cfd3d8;
+    color: #071017;
+    direction: rtl;
+    margin: 0 auto;
+    max-width: 1040px;
+}
+
+.verification-header {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.verification-header td {
+    border: 1px solid #cfd3d8;
+    height: 126px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.verification-header__result {
+    width: 22%;
+}
+
+.verification-header__title {
+    width: 48%;
+}
+
+.verification-header__logos {
+    width: 30%;
+}
+
+.verification-title {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.verification-result {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 0 12px;
+}
+
+.verification-result--valid {
+    color: #176747;
+}
+
+.verification-result--expired,
+.verification-result--canceled,
+.verification-result--invalid,
+.verification-result--system,
+.verification-result--tampered {
+    color: #9f2f23;
+}
+
+.verification-result span {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.verification-logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.verification-logo--ajeer {
+    margin-left: 18px;
+    width: 74px;
+}
+
+.verification-logo--hrsd {
+    width: 172px;
+}
+
+.verification-copy {
+    font-size: 18px;
+    line-height: 1.9;
+    margin: 64px auto 36px;
+    max-width: 900px;
+    text-align: center;
+}
+
+.verification-copy p {
+    margin: 0;
+}
+
+.verification-table {
+    border-collapse: collapse;
+    margin: 0 auto 0;
+    table-layout: fixed;
+    width: calc(100% - 34px);
+}
+
+.verification-table + .verification-table {
+    margin-top: 0;
+}
+
+.verification-table th,
+.verification-table td {
+    border: 1px solid #cfd3d8;
+    font-size: 17px;
+    line-height: 1.45;
+    padding: 10px 12px;
+    vertical-align: middle;
+    word-break: break-word;
+}
+
+.verification-table__section th {
+    background: #e9eeee;
+    font-size: 19px;
+    font-weight: 700;
+    padding: 12px;
+    text-align: center;
+}
+
+.verification-table__label {
+    background: #e9eeee;
+    font-weight: 400;
+    text-align: right;
+    width: 24%;
+}
+
+.verification-table__label span {
+    color: #5d686d;
+    display: block;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.verification-table__value {
+    background: #fbfcfb;
+    font-weight: 700;
+    text-align: center;
+    width: 26%;
+}
+
+.verification-actions {
+    margin: 24px 17px 0;
+    text-align: center;
+}
+
+.verification-actions button {
+    background: #1f6f55;
+    border: 0;
+    color: #fbfcfb;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 11px 22px;
+}
+
+@media (max-width: 760px) {
+    .verification-page {
+        padding: 12px 8px 34px;
+    }
+
+    .verification-document {
+        border-width: 1px;
+    }
+
+    .verification-header,
+    .verification-header tbody,
+    .verification-header tr,
+    .verification-header td {
+        display: block;
+        width: 100%;
+    }
+
+    .verification-header td {
+        box-sizing: border-box;
+        height: auto;
+        padding: 18px 10px;
+    }
+
+    .verification-title {
+        font-size: 24px;
+    }
+
+    .verification-copy {
+        font-size: 15px;
+        margin: 30px 16px 24px;
+    }
+
+    .verification-table {
+        width: calc(100% - 16px);
+    }
+
+    .verification-table,
+    .verification-table tbody,
+    .verification-table tr,
+    .verification-table th,
+    .verification-table td {
+        display: block;
+    }
+
+    .verification-table th,
+    .verification-table td {
+        box-sizing: border-box;
+        text-align: right;
+        width: 100%;
+    }
+
+    .verification-table__value {
+        text-align: right;
+    }
+}
+
+[hidden] { display: none !important; }
+#loading, #errorBox { margin: 24px auto; text-align: center; }
