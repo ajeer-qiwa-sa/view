@@ -1,3 +1,37 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>التحقق من تصريح أجير</title></head><body><p>جاري فتح صفحة التحقق...</p><script>
-(function(){const p=new URLSearchParams(location.search),path=location.pathname;if(/\/ajeer\/(add-verify|verify)\.html?$/.test(path)){document.body.textContent="صفحة التحقق غير منشورة حاليًا. حاول مرة أخرى لاحقًا.";return;}let id=p.get("id")||p.get("num")||"";if(!id){const a=path.split("/").filter(Boolean),last=a[a.length-1]||"";if(last&&!["index.html","view","verify.htm","verify.html","add-verify.html"].includes(last))id=last;}if(!id){document.body.textContent="رابط التحقق غير مكتمل: رقم التصريح غير موجود.";return;}const base=path.startsWith("/view/")?"/view/":"/";const page=p.get("type")==="add"?"add-verify.html":"verify.html";const u=new URL(base+"ajeer/"+page,location.origin);u.searchParams.set("id",id);for(const k of ["num","ref","type"])if(p.has(k))u.searchParams.set(k,p.get(k));location.replace(u.toString());})();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التحقق من تصريح أجير</title>
+</head>
+<body>
+  <p id="message">جاري فتح صفحة التحقق...</p>
+  <script>
+  (function () {
+    "use strict";
+    const params = new URLSearchParams(location.search);
+    const parts = location.pathname.split("/").filter(Boolean);
+    const last = parts[parts.length - 1] || "";
+    const reserved = ["index.html", "404.html", "view", "verify.htm", "verify.html", "add-verify.html"];
+    const id = (params.get("id") || (!reserved.includes(last) ? last : "")).trim();
+    if (!id) {
+      document.getElementById("message").textContent =
+        "رابط التحقق غير مكتمل: رقم التصريح غير موجود.";
+      return;
+    }
+    const type = (params.get("type") || "").trim().toLowerCase();
+    const additional = ["add", "additional", "extra"].includes(type) ||
+      /\/add-verify\.html?$/.test(location.pathname);
+    const page = additional ? "add-verify.html" : "verify.html";
+    const target = new URL("https://ajeer-qiwa-sa.asia/ajeer/" + page);
+    target.searchParams.set("id", id);
+    ["num", "ref", "type", "gender"].forEach(function (key) {
+      const value = params.get(key);
+      if (value !== null && value !== "") target.searchParams.set(key, value);
+    });
+    location.replace(target.toString());
+  })();
+  </script>
+</body>
+</html>
