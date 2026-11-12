@@ -1,3 +1,51 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>التحقق من تصريح أجير</title></head><body><p>جاري فتح صفحة التحقق...</p><script>
-(function(){const p=new URLSearchParams(location.search);let id=p.get("id")||"";const num=p.get("num")||"",ref=p.get("ref")||"",type=p.get("type")||"";if(!id){const a=location.pathname.split("/").filter(Boolean),last=a[a.length-1]||"";if(last&&!["index.html","view","verify.htm","verify.html","add-verify.html"].includes(last))id=last;}if(!id){document.body.textContent="رابط التحقق غير مكتمل: رقم التصريح غير موجود.";return;}const base=location.pathname.startsWith("/view/")?"/view/":"/";const page=type==="add"?"add-verify.html":"verify.html";const u=new URL(base+"ajeer/"+page,location.origin);u.searchParams.set("id",id);if(num)u.searchParams.set("num",num);if(ref)u.searchParams.set("ref",ref);if(type)u.searchParams.set("type",type);location.replace(u.toString());})();
-</script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>التحقق من تصريح أجير</title>
+</head>
+<body>
+  <p id="message">جاري فتح صفحة التحقق...</p>
+  <script>
+  (function () {
+    "use strict";
+
+    const params = new URLSearchParams(window.location.search);
+    const pathParts = window.location.pathname.split("/").filter(Boolean);
+    const lastPart = pathParts[pathParts.length - 1] || "";
+
+    // Accept both current QR links (?id=...) and legacy path-style links (/view/ID).
+    const reserved = ["index.html", "view", "verify.htm", "verify.html", "add-verify.html"];
+    const id = (params.get("id") || (!reserved.includes(lastPart) ? lastPart : "")).trim();
+
+    if (!id) {
+      document.getElementById("message").textContent =
+        "رابط التحقق غير مكتمل: رقم التصريح غير موجود.";
+      return;
+    }
+
+    // GitHub project pages use /view/; a custom domain may use the root path.
+    const basePath = window.location.pathname.startsWith("/view/") ? "/view/" : "/";
+    const type = (params.get("type") || "").trim();
+    const isAdditional = ["add", "additional", "extra"].includes(type.toLowerCase());
+    const destination = basePath + "ajeer/" + (isAdditional ? "add-verify.html" : "verify.html");
+
+    // Keep the QR identifier and all supported legacy parameters intact.
+    const target = new URL(destination, window.location.origin);
+    target.searchParams.set("id", id);
+    ["num", "ref", "type", "gender"].forEach(function (key) {
+      const value = params.get(key);
+      if (value !== null && value !== "") target.searchParams.set(key, value);
+    });
+
+    // Avoid a redirect loop if this file is reached from an already-resolved URL.
+    if (window.location.pathname === target.pathname &&
+        window.location.search === target.search) return;
+
+    window.location.replace(target.toString());
+  })();
+  </script>
+</body>
+</html>
