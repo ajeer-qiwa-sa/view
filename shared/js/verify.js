@@ -28,8 +28,8 @@ function onCaptchaSuccess() {
 }
 window.onCaptchaSuccess = onCaptchaSuccess;
 // GitHub Pages-only contract verification via the Supabase public REST API.
-const SB_URL="https://pbyeagtiupzqyjdycbyv.supabase.co";
-const SB_KEY="sb_publishable_8cKY0gbo8OLRWyzPGUtE3A_KwudbDok";
+const SB_URL="https://satqfzfsyhzbvwqxcbny.supabase.co";
+const SB_KEY="sb_publishable_J3qkvU96G6bLH8FHvd1VlA_Y-tvpMT_";
 const SELECT="id,contract_number,contract_type,worker_name,worker_profession,worker_id_number,worker_nationality,provider_entity,provider_hr_id,beneficiary_entity,beneficiary_hr_id,start_date,end_date,is_blocked,blocked_reason";
 function esc(v){return String(v??"-").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function date(v){if(!v)return "-";const d=new Date(v);return Number.isNaN(d.getTime())?esc(v):d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
