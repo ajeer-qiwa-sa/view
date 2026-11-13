@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   const headers={apikey:SB_KEY,Accept:"application/json"};
   async function lookup(column,value){
    if(!value)return null;
-   const q=new URLSearchParams({select:SELECT,[column]:"eq."+value,limit:"2"});
+   const filter=column==="worker_name"?"ilike.*"+String(value).trim()+"*":"eq."+value;\n   const q=new URLSearchParams({select:SELECT,[column]:filter,limit:"2"});
    const r=await fetch(SB_URL+"/rest/v1/contracts?"+q,{headers,cache:"no-store"});
    if(!r.ok)throw new Error("Supabase "+r.status);
    const rows=await r.json();
