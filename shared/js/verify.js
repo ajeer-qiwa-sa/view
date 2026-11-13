@@ -56,11 +56,13 @@ document.addEventListener("DOMContentLoaded",async()=>{
   const legacyIds = {
    "0993aa5d-ad51-4cf4-993c-81993139a7ed":"c2eac7fe-a0af-4510-ab07-dc29f49d9316",
    "feaa67fb-1b0e-45a4-9d7c-c8301fbce678":"57018ba6-269a-4c88-a948-9e4d2edab8a6",
-   "c0cb6199-5bf4-4919-abac-1c5a1f563084":"33610b09-38d8-4e79-bdf3-cf3d9706e648"
+   "c0cb6199-5bf4-4919-abac-1c5a1f563084":"33610b09-38d8-4e79-bdf3-cf3d9706e648",
+   "17a6436e-a062-4c73-8a24-56d434092f1e":"2a504537-c634-4b43-92c1-d32025b84219"
   };
   const legacyNumbers = {
    "TW53123917":"57018ba6-269a-4c88-a948-9e4d2edab8a6",
-   "TW29695639":"33610b09-38d8-4e79-bdf3-cf3d9706e648"
+   "TW29695639":"33610b09-38d8-4e79-bdf3-cf3d9706e648",
+   "TW84213870":"2a504537-c634-4b43-92c1-d32025b84219"
   };
   const qrNum=(p.get("num")||"").trim();
   let d=null;
