@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", async function () {
  function fmtDate(v){if(!v)return "-";const d=new Date(v);return Number.isNaN(d.getTime())?String(v):d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
  if(!id){fail("رابط التصريح غير مكتمل: رقم العقد غير موجود.");return;}
  try{
-  const url="https://pbyeagtiupzqyjdycbyv.supabase.co/rest/v1/contracts?select=*&id=eq."+encodeURIComponent(id)+"&limit=1";
-  const response=await fetch(url,{headers:{apikey:"sb_publishable_8cKY0gbo8OLRWyzPGUtE3A_KwudbDok",Authorization:"Bearer sb_publishable_8cKY0gbo8OLRWyzPGUtE3A_KwudbDok",Accept:"application/json"},cache:"no-store"});
+  const url="https://satqfzfsyhzbvwqxcbny.supabase.co/rest/v1/contracts?select=*&id=eq."+encodeURIComponent(id)+"&limit=1";
+  const response=await fetch(url,{headers:{apikey:"sb_publishable_J3qkvU96G6bLH8FHvd1VlA_Y-tvpMT_",Authorization:"Bearer sb_publishable_J3qkvU96G6bLH8FHvd1VlA_Y-tvpMT_",Accept:"application/json"},cache:"no-store"});
   if(!response.ok){fail(response.status===404?"التصريح غير موجود.":"تعذر الاتصال بقاعدة بيانات التحقق ("+response.status+").");return;}
   const rows=await response.json(),d=rows&&rows[0];if(!d){fail("التصريح المطلوب غير موجود في قاعدة البيانات.");return;}
   const num=params.get("num")||d.add_number||("TW"+String(d.contract_number||"").replace(/^[A-Za-z]+/,""));
