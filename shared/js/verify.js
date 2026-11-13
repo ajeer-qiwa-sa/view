@@ -42,11 +42,24 @@ document.addEventListener("DOMContentLoaded",async()=>{
  if(!el)return;if(!id){errorBox(el,"رابط التحقق لا يحتوي على رقم العقد.");return;}
  try{
   const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
-  const q=new URLSearchParams({select:SELECT,[uuid?"id":"contract_number"]:"eq."+id,limit:"1"});
-  const r=await fetch(SB_URL+"/rest/v1/contracts?"+q,{headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,Accept:"application/json"},cache:"no-store"});
-  if(r.status===404){errorBox(el,"العقد المطلوب غير موجود.");return;}
-  if(!r.ok){errorBox(el,"خدمة قاعدة البيانات غير متاحة حاليًا ("+r.status+").");return;}
-  const rows=await r.json(),d=rows[0];if(!d){errorBox(el,"العقد المطلوب غير موجود في قاعدة البيانات.");return;}
+  const headers={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,Accept:"application/json"};
+  async function lookup(column,value){
+   if(!value)return null;
+   const q=new URLSearchParams({select:SELECT,[column]:"eq."+value,limit:"2"});
+   const r=await fetch(SB_URL+"/rest/v1/contracts?"+q,{headers,cache:"no-store"});
+   if(!r.ok)throw new Error("Supabase "+r.status);
+   const rows=await r.json();
+   return Array.isArray(rows)&&rows.length===1?rows[0]:null;
+  }
+  let d=null;
+  if(uuid)d=await lookup("id",id);
+  else d=await lookup("contract_number",id);
+  // Legacy QR links may contain a previous UUID/permit number. Only use
+  // exact, unique QR number or worker reference matches as safe fallbacks.
+  if(!d)d=await lookup("add_number",p.get("num"));
+  if(!d)d=await lookup("contract_number",p.get("num"));
+  if(!d)d=await lookup("worker_name",p.get("ref"));
+  if(!d){errorBox(el,"العقد غير موجود أو أن بيانات الرابط القديمة لا تطابق سجلًا واحدًا في قاعدة البيانات.");return;}
   const blocked=!!d.is_blocked||expired(d.end_date);
   const status=blocked?"موقوف":"ساري";
   el.innerHTML='<div class="info-card"><div class="card-header">معلومات التصريح</div><div class="card-content">'+
