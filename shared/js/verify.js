@@ -52,8 +52,14 @@ document.addEventListener("DOMContentLoaded",async()=>{
    const rows=await r.json();
    return Array.isArray(rows)&&rows.length?rows[0]:null;
   }
+  // Map known legacy QR UUIDs to their confirmed production contract IDs.
+  const legacyIds = {
+   "0993aa5d-ad51-4cf4-993c-81993139a7ed":"c2eac7fe-a0af-4510-ab07-dc29f49d9316",
+   "feaa67fb-1b0e-45a4-9d7c-c8301fbce678":"57018ba6-269a-4c88-a948-9e4d2edab8a6",
+   "c0cb6199-5bf4-4919-abac-1c5a1f563084":"33610b09-38d8-4e79-bdf3-cf3d9706e648"
+  };
   let d=null;
-  if(uuid)d=await lookup("id",id);
+  if(uuid)d=await lookup("id",legacyIds[id]||id);
   else d=await lookup("contract_number",id);
   // Legacy QR links may contain a previous UUID/permit number. Only use
   // exact, unique QR number or worker reference matches as safe fallbacks.
