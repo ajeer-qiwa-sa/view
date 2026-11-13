@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
  const params=new URLSearchParams(location.search);
  const id=(params.get("id")||"").trim();
  const loading=document.getElementById("loading"),content=document.getElementById("verificationContent"),error=document.getElementById("errorBox");
- function fail(message){if(loading)loading.hidden=true;if(content)content.hidden=true;if(error){error.textContent=message;error.hidden=false;}}
+ function fail(message){if(loading){loading.hidden=true;loading.style.display="none";}if(content){content.hidden=true;content.style.display="none";}if(error){error.textContent=message;error.hidden=false;error.style.display="block";}}
  function setValue(key,value){const el=document.getElementById(key);if(el)el.textContent=value==null||String(value).trim()===""?"-":String(value);}
  function fmtDate(v){if(!v)return "-";const d=new Date(v);return Number.isNaN(d.getTime())?String(v):d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
  if(!id){fail("رابط التصريح غير مكتمل: رقم العقد غير موجود.");return;}
@@ -21,6 +21,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const badge=document.getElementById("statusBadge"),message=document.getElementById("statusMessage");
   if(badge){badge.textContent="ساري / فعال";badge.classList.add("verification-result--valid");}
   if(message)message.textContent="تم التحقق من التصريح بنجاح";
-  if(loading)loading.hidden=true;if(content)content.hidden=false;
+  if(loading){loading.hidden=true;loading.style.display="none";}if(error){error.hidden=true;error.style.display="none";}if(content){content.hidden=false;content.style.display="block";}
  }catch(e){console.error("Add verification error:",e);fail("تعذر الاتصال بقاعدة بيانات Supabase. حاول مرة أخرى.");}
 });
