@@ -30,7 +30,7 @@ window.onCaptchaSuccess = onCaptchaSuccess;
 // GitHub Pages-only contract verification via the Supabase public REST API.
 const SB_URL="https://satqfzfsyhzbvwqxcbny.supabase.co";
 const SB_KEY="sb_publishable_J3qkvU96G6bLH8FHvd1VlA_Y-tvpMT_";
-const SELECT="id,contract_number,contract_type,worker_name,worker_profession,worker_id_number,worker_nationality,provider_entity,provider_hr_id,beneficiary_entity,beneficiary_hr_id,start_date,end_date,is_blocked,blocked_reason";
+const SELECT="id,contract_number,add_number,contract_type,worker_name,worker_profession,worker_id_number,worker_nationality,provider_entity,provider_hr_id,beneficiary_entity,beneficiary_hr_id,start_date,end_date,is_blocked,blocked_reason,created_at";
 function esc(v){return String(v??"-").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function date(v){if(!v)return "-";const d=new Date(v);return Number.isNaN(d.getTime())?esc(v):d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function expired(v){if(!v)return false;const d=new Date(v);if(Number.isNaN(d.getTime()))return false;d.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);return d<t;}
@@ -46,11 +46,11 @@ document.addEventListener("DOMContentLoaded",async()=>{
   async function lookup(column,value){
    if(!value)return null;
    const filter=column==="worker_name"?"ilike.*"+String(value).trim()+"*":"eq."+value;
-   const q=new URLSearchParams({select:SELECT,[column]:filter,limit:"2"});
+   const q=new URLSearchParams({select:SELECT,[column]:filter,limit:"1",order:"created_at.desc"});
    const r=await fetch(SB_URL+"/rest/v1/contracts?"+q,{headers,cache:"no-store"});
    if(!r.ok)throw new Error("Supabase "+r.status);
    const rows=await r.json();
-   return Array.isArray(rows)&&rows.length===1?rows[0]:null;
+   return Array.isArray(rows)&&rows.length?rows[0]:null;
   }
   let d=null;
   if(uuid)d=await lookup("id",id);
