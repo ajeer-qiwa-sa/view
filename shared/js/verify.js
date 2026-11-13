@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
  if(!el)return;if(!id){errorBox(el,"رابط التحقق لا يحتوي على رقم العقد.");return;}
  try{
   const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
-  const headers={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,Accept:"application/json"};
+  const headers={apikey:SB_KEY,Accept:"application/json"};
   async function lookup(column,value){
    if(!value)return null;
    const q=new URLSearchParams({select:SELECT,[column]:"eq."+value,limit:"2"});
