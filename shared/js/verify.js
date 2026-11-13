@@ -58,13 +58,18 @@ document.addEventListener("DOMContentLoaded",async()=>{
    "feaa67fb-1b0e-45a4-9d7c-c8301fbce678":"57018ba6-269a-4c88-a948-9e4d2edab8a6",
    "c0cb6199-5bf4-4919-abac-1c5a1f563084":"33610b09-38d8-4e79-bdf3-cf3d9706e648"
   };
+  const legacyNumbers = {
+   "TW53123917":"57018ba6-269a-4c88-a948-9e4d2edab8a6",
+   "TW29695639":"33610b09-38d8-4e79-bdf3-cf3d9706e648"
+  };
+  const qrNum=(p.get("num")||"").trim();
   let d=null;
   if(uuid)d=await lookup("id",legacyIds[id]||id);
   else d=await lookup("contract_number",id);
-  // Legacy QR links may contain a previous UUID/permit number. Only use
-  // exact, unique QR number or worker reference matches as safe fallbacks.
-  if(!d)d=await lookup("add_number",p.get("num"));
-  if(!d)d=await lookup("contract_number",p.get("num"));
+  // Explicit legacy QR-number mappings, followed by safe database fallbacks.
+  if(!d && legacyNumbers[qrNum])d=await lookup("id",legacyNumbers[qrNum]);
+  if(!d)d=await lookup("add_number",qrNum);
+  if(!d)d=await lookup("contract_number",qrNum);
   if(!d)d=await lookup("worker_name",(p.get("ref")||"").trim());
   if(!d){errorBox(el,"العقد غير موجود أو أن بيانات الرابط القديمة لا تطابق سجلًا واحدًا في قاعدة البيانات.");return;}
   const blocked=!!d.is_blocked||expired(d.end_date);
