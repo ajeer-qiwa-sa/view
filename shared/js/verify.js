@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   // exact, unique QR number or worker reference matches as safe fallbacks.
   if(!d)d=await lookup("add_number",p.get("num"));
   if(!d)d=await lookup("contract_number",p.get("num"));
-  if(!d)d=await lookup("worker_name",p.get("ref"));
+  if(!d)d=await lookup("worker_name",(p.get("ref")||"").trim());
   if(!d){errorBox(el,"العقد غير موجود أو أن بيانات الرابط القديمة لا تطابق سجلًا واحدًا في قاعدة البيانات.");return;}
   const blocked=!!d.is_blocked||expired(d.end_date);
   const status=blocked?"موقوف":"ساري";
