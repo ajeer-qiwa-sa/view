@@ -24,7 +24,7 @@
     const additional = ["add", "additional", "extra"].includes(type) ||
       /\/add-verify\.html?$/.test(location.pathname);
     const page = additional ? "add-verify.html" : "verify.html";
-    const target = new URL("https://ajeer-qiwa-sa.asia/ajeer/" + page);
+    const target = new URL("https://ajeer-vercel.vercel.app/ajeer/" + page);
     target.searchParams.set("id", id);
     ["num", "ref", "type", "gender"].forEach(function (key) {
       const value = params.get(key);
