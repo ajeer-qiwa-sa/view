@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
   <title>التحقق من تصريح أجير</title>
 </head>
 <body>
@@ -13,71 +14,110 @@
   (function () {
     "use strict";
 
-    const params = new URLSearchParams(location.search);
-    const parts = location.pathname.split("/").filter(Boolean);
+    const message = document.getElementById("message");
+    const params = new URLSearchParams(window.location.search);
 
-    const reserved = [
+    const parts = window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+    const reserved = new Set([
+      "view",
       "index.html",
       "404.html",
-      "view",
       "verify.htm",
       "verify.html",
       "add-verify.html",
       "blocked.html",
       "add",
+      "additional",
+      "extra",
       "blocked"
-    ];
+    ]);
 
-    const last = decodeURIComponent(
-      parts[parts.length - 1] || ""
-    );
+    // Extract ID from query or URL path
+    let pathId = "";
 
-    const id = (
-      params.get("id") ||
-      (!reserved.includes(last.toLowerCase()) ? last : "")
-    ).trim();
+    for (let i = parts.length - 1; i >= 0; i--) {
+      let segment;
 
+      try {
+        segment = decodeURIComponent(parts[i]).trim();
+      } catch (error) {
+        message.textContent = "رابط التحقق غير صالح.";
+        return;
+      }
+
+      if (!reserved.has(segment.toLowerCase())) {
+        pathId = segment;
+        break;
+      }
+    }
+
+    const id = (params.get("id") || pathId).trim();
     const num = (params.get("num") || "").trim();
-    const ref = (params.get("ref") || "").trim();
-    const type = (params.get("type") || "").trim().toLowerCase();
+    const type = (params.get("type") || "")
+      .trim()
+      .toLowerCase();
+
+    // Determine verification page
+    const pathTypes = parts.map(function (part) {
+      return part.toLowerCase();
+    });
+
+    const isAdditional =
+      ["add", "additional", "extra"].includes(type) ||
+      pathTypes.some(function (part) {
+        return [
+          "add",
+          "additional",
+          "extra",
+          "add-verify.html"
+        ].includes(part);
+      });
+
+    const isBlocked =
+      type === "blocked" ||
+      pathTypes.some(function (part) {
+        return [
+          "blocked",
+          "blocked.html"
+        ].includes(part);
+      });
 
     if (!id && !num) {
-      document.getElementById("message").textContent =
+      message.textContent =
         "رابط التحقق غير مكتمل: رقم التصريح غير موجود.";
       return;
     }
 
-    const path = location.pathname.toLowerCase();
-
-    const additional =
-      ["add", "additional", "extra"].includes(type) ||
-      /\/add(?:-verify\.html?)?\/?$/.test(path);
-
-    const blocked =
-      type === "blocked" ||
-      /\/blocked(?:\.html?)?\/?$/.test(path);
-
-    const page = blocked
+    const page = isBlocked
       ? "blocked.html"
-      : additional
+      : isAdditional
         ? "add-verify.html"
         : "verify.html";
 
     const target = new URL(
-      "https://ajeervercel.vercel.app/ajeer/" + page
+      "/ajeer/" + page,
+      "https://ajeervercel.vercel.app"
     );
 
-    if (id) target.searchParams.set("id", id);
-    if (num) target.searchParams.set("num", num);
-    if (ref) target.searchParams.set("ref", ref);
-
-    ["type", "gender"].forEach(function (key) {
-      const value = params.get(key);
-      if (value) target.searchParams.set(key, value);
+    // Preserve original parameters
+    params.forEach(function (value, key) {
+      if (key.toLowerCase() !== "id") {
+        target.searchParams.append(key, value);
+      }
     });
 
-    location.replace(target.toString());
+    if (id) {
+      target.searchParams.set("id", id);
+    }
+
+    // Redirect to verification page
+    window.location.replace(target.toString());
+
   })();
   </script>
 </body>
 </html>
+
